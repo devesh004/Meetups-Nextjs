@@ -1,3 +1,4 @@
+import Head from "next/head";
 import NewMeetupForm from "../../components/meetups/NewMeetupForm";
 import { useRouter } from "next/router";
 const NewMeetup = () => {
@@ -15,7 +16,15 @@ const NewMeetup = () => {
     // router.push("/"); //here if we use router.push("/") then we can go back to new meetup page after redirecting/
     router.replace("/"); // but in case of router.replace("/") we can't go back
   };
-  return <NewMeetupForm onAddMeetup={addNewMeet} />;
+  return (
+    <>
+      <Head>
+        <title>Add new meetup</title>
+        <meta name="description" content="Create your own meetup" />
+      </Head>
+      <NewMeetupForm onAddMeetup={addNewMeet} />
+    </>
+  );
 };
 
 export default NewMeetup;

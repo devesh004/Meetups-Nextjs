@@ -1,4 +1,5 @@
 // import { useEffect, useState } from "react";
+import Head from "next/head";
 import { MongoClient } from "mongodb";
 import MeetupList from "../components/meetups/MeetupList";
 
@@ -12,7 +13,18 @@ const HomePage = (props) => {
   //   setMeetups(meets);
   // }, []);
 
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <>
+      <Head>
+        <title>Next Meetup</title>
+        <meta
+          name="description"
+          content="Browse a huge list of active meetup"
+        />
+      </Head>
+      <MeetupList meetups={props.meetups} />
+    </>
+  );
 };
 
 //revalidate: 10 => means our page will fetch data from database or api(update) in every 10sec after deploying.So the page
@@ -25,7 +37,7 @@ export const getStaticProps = async () => {
   const db = client.db();
   const meetUpsCollection = db.collection("meetups");
   const meetups = await meetUpsCollection.find().toArray();
-  console.log("MEETS ARE", meetups);
+  // console.log("MEETS ARE", meetups);
   client.close();
   return {
     props: {
