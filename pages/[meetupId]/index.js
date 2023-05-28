@@ -29,7 +29,9 @@ export const getStaticPaths = async () => {
   const data = await MeetupsCollection.find({}, { _id: 1 }).toArray(); //only fetching id
   client.close();
   return {
-    fallback: false,
+    //false->only pregenerated, true->if page not there first will render a empty then will generate new one
+    //blocking-> page not there will stay then generate then show up
+    fallback: "blocking",
     paths: data.map((meet) => ({
       params: {
         meetupId: meet._id.toString(),
